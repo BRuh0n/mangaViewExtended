@@ -20,9 +20,9 @@ android {
     def date = new Date()
     def formattedDate = date.format('YYMMdd')
     // integer max value is 2147483647
-    def code = formattedDate.toInteger() + 2112000000
+    def code = formattedDate.toInteger() + 2113000000
     defaultConfig {
-        applicationId "ml.melun.mangaview"
+        applicationId "ml.melun.mangaviewextended"
         minSdkVersion 17
         targetSdkVersion 33
         versionName "4.6-" + code
@@ -42,7 +42,7 @@ android {
             signingConfig signingConfigs.debug
         }
     }
-    namespace 'ml.melun.mangaview'
+    namespace 'ml.melun.mangaviewextended'
 }
 repositories {
     mavenCentral()
