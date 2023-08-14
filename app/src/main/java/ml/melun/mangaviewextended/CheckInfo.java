@@ -135,7 +135,7 @@ public class CheckInfo {
 
         protected Integer doInBackground(Void... params) {
             try {
-                Response response = client.get("https://github.com/BRuh0n/myViewAndroid/releases/latest", new HashMap<>());
+                Response response = client.get("https://github.com/BRuh0n/mangaViewExtended/releases/latest", new HashMap<>());
                 String rawdata = response.body().string();
                 response.close();
                 data = new JSONObject(rawdata);
