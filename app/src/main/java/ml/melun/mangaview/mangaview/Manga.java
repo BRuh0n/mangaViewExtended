@@ -1,22 +1,5 @@
 package ml.melun.mangaview.mangaview;
 
-import java.io.File;
-import java.net.URLDecoder;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Comparator;
-import java.util.List;
-import java.util.Map;
-
-import org.json.JSONObject;
-import org.jsoup.*;
-import org.jsoup.nodes.Attribute;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
-
-import okhttp3.Response;
-
 import static ml.melun.mangaview.Utils.CODE_SCOPED_STORAGE;
 import static ml.melun.mangaview.mangaview.MTitle.baseModeStr;
 import static ml.melun.mangaview.mangaview.MTitle.base_comic;
@@ -26,8 +9,24 @@ import static ml.melun.mangaview.mangaview.Title.LOAD_OK;
 import android.content.Context;
 import android.net.Uri;
 import android.os.Build;
+import android.util.Log;
 
 import androidx.documentfile.provider.DocumentFile;
+
+import org.json.JSONObject;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Attribute;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+
+import java.io.File;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
+
+import okhttp3.Response;
 
     /*
     mode:
@@ -115,11 +114,7 @@ public class Manga {
 
                 //temp title
                 Element navbar = d.selectFirst("div.toon-nav");
-                int tid = Integer.parseInt(navbar.select("a")
-                        .last()
-                        .attr("href")
-                        .split(baseModeStr(baseMode) + '/')[1]
-                        .split("\\?")[0]);
+                int tid = Integer.parseInt(navbar.select("a").last().attr("href").split(baseModeStr(baseMode) + '/')[1].split("\\?")[0]);
 
                 if (title == null) title = new Title(name, "", "", null, "", tid, baseMode);
 
@@ -153,20 +148,16 @@ public class Manga {
                                 String img = a.getValue();
                                 if (!img.isEmpty() && !img.contains("blank") && !img.contains("loading")) {
                                     flag = true;
-                                    if (img.startsWith("/"))
-                                        imgs.add(client.getUrl() + img);
-                                    else
-                                        imgs.add(img);
+                                    if (img.startsWith("/")) imgs.add(client.getUrl() + img);
+                                    else imgs.add(img);
                                 }
                             }
                         }
                         if (!flag) {
                             String img = e.attr("src");
                             if (!img.isEmpty() && !img.contains("blank") && !img.contains("loading")) {
-                                if (img.startsWith("/"))
-                                    imgs.add(client.getUrl() + img);
-                                else
-                                    imgs.add(img);
+                                if (img.startsWith("/")) imgs.add(client.getUrl() + img);
+                                else imgs.add(img);
                             }
                         }
                     }
@@ -175,15 +166,9 @@ public class Manga {
                 //comments
                 Element commentdiv = d.selectFirst("div#viewcomment");
 
-
                 try {
                     for (Element e : commentdiv.selectFirst("section#bo_vc").select("div.media")) {
-                        try {
-                            comments.add(parseComment(e));
-                        } catch (Exception e3) {
-                            e3.printStackTrace();
-                        }
-
+                        comments.add(parseComment(e));
                     }
                     for (Element e : commentdiv.selectFirst("section#bo_vcb").select("div.media")) {
                         try {
@@ -218,25 +203,22 @@ public class Manga {
         String lvlstr;
         int indent;
         String indentstr;
+
         //indent
         indentstr = e.attr("style");
         if (indentstr.length() > 0)
             indent = Integer.parseInt(indentstr.substring(indentstr.lastIndexOf(':') + 1, indentstr.lastIndexOf('p'))) / 64;
-        else
-            indent = 0;
+        else indent = 0;
 
         //icon
         Element icone = e.selectFirst(".media-object");
-        if (icone.is("img"))
-            icon = icone.attr("src");
-        else
-            icon = "";
+        if (icone.is("img")) icon = icone.attr("src");
+        else icon = "";
 
         Element header = e.selectFirst("div.media-heading");
         Element userSpan = header.selectFirst("span.member");
         user = userSpan.ownText();
-        if (userSpan.hasClass("guest"))
-            level = 0;
+        if (userSpan.hasClass("guest")) level = 0;
         else {
             lvlstr = userSpan.selectFirst("img").attr("src");
             level = Integer.parseInt(lvlstr.substring(lvlstr.lastIndexOf('/') + 1, lvlstr.lastIndexOf('.')));
@@ -245,7 +227,8 @@ public class Manga {
 
         Element cbody = e.selectFirst("div.media-content");
         content = cbody.selectFirst("div:not([class])").ownText();
-        likes = Integer.parseInt(cbody.selectFirst("div.cmt-good-btn").selectFirst("span").ownText());
+        likes = Integer.parseInt(cbody.selectFirst("div.cmt-good-btn").select("span").last().ownText());
+
         return new Comment(user, timestamp, icon, content, indent, likes, level);
     }
 
