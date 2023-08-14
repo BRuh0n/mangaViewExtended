@@ -1,13 +1,20 @@
-[![logo](/web/logo_static.svg "MangaView")](https://junheah.github.io/MangaViewAndroid/)
-# 마나토끼 전용 뷰어/다운로더 앱 #
+![logo](/web/logo_static.svg "MangaView")
+# 🚀 마나토끼 전용 뷰어/다운로더 Extended #
 
-[![GitHub All Releases](https://img.shields.io/github/downloads/junheah/MangaViewAndroid/total?color=db49de&label=다운로드)](https://junheah.github.io/MangaViewAndroid/)
-### [최신 버전 다운로드 (apk)](https://junheah.github.io/MangaViewAndroid/) ###
+## Attribution
 
-#
-[모든 릴리즈 한번에 보기](https://github.com/junheah/MangaViewAndroid/tree/master/releases_old)
+This project uses code from the following sources:
 
-버그 제보는 [이슈](https://github.com/junheah/MangaViewAndroid/issues)를 통해서 해주세요
+- [Original Project](https://github.com/junheah/MangaViewAndroid) by junheah, licensed under the MIT License.
 
-## License ##
-[MIT License](/LICENSE)
+🙌 All thanks and support MUST go to the original author of this project for creating such an incredible foundation.
+
+
+## Bug Fixes
+
+- Bug Fix 1: Resolved issue causing comments to be hidden, now visible as expected.
+
+
+## License
+
+This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
